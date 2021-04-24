@@ -1,25 +1,31 @@
-import logo from './logo.svg';
+import React, {useState} from 'react';
+import {KeyBoardShortCut} from './lib'
 import './App.css';
+import { withKeyBoardShortCuts } from './lib/with-hoc';
+
+const DisplayShortCuts = ({shortcuts}) => {
+  return <p>{shortcuts.combos.length}</p>
+}
+
+const ListOfShortcuts = withKeyBoardShortCuts(DisplayShortCuts)
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+       const [color, setColor] = useState('black')
+
+const toggleColor = () => {
+  setColor((color) => ( color === 'black' ? 'red': 'black'))
+}
+return (
+  <>
+    <KeyBoardShortCut
+      combo='shift a'
+      callback={toggleColor}
+      description='Toggles the component A font color from black to red'
+    />
+    <p style={{'color':color}}>Hello World</p>
+    <ListOfShortcuts />
+  </>
+);
 }
 
 export default App;
